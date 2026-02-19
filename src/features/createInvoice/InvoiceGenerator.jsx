@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 const createEmptyRow = (id) => ({
     id,
@@ -68,6 +68,7 @@ function numberToWords(value) {
 }
 
 function InvoiceGenerator() {
+    const invoiceRef = useRef(null)
     const [companyName, setCompanyName] = useState('AUTHETIC LACQUER')
     const [customerName, setCustomerName] = useState('')
     const [customerAddress, setCustomerAddress] = useState('')
@@ -131,15 +132,66 @@ function InvoiceGenerator() {
             maximumFractionDigits: 2,
         })
     }
+    // ======================================= Print Logic/ Download pdf ======================================= \\
+
+    function handlePrintInvoice() {
+        if (!invoiceRef.current) return
+
+        const printWindow = window.open('', '_blank', 'width=1024,height=768')
+        if (!printWindow) return
+
+        const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'))
+            .map((styleNode) => styleNode.outerHTML)
+            .join('')
+
+        printWindow.document.write(`
+            <!doctype html>
+            <html>
+                <head>
+                    <meta charset="utf-8" />
+                    <title>Invoice ${invoiceNumber || ''}</title>
+                    ${styles}
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 24px;
+                            background: white;
+                        }
+
+                        @page {
+                            margin: 12mm;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${invoiceRef.current.outerHTML}
+                </body>
+            </html>
+        `)
+
+        printWindow.document.close()
+        printWindow.focus()
+
+        const runPrint = () => {
+            printWindow.print()
+            printWindow.close()
+        }
+
+        if (printWindow.document.readyState === 'complete') {
+            setTimeout(runPrint, 250)
+        } else {
+            printWindow.onload = () => setTimeout(runPrint, 250)
+        }
+    }
 
     return (
         <div className='sm:p-6 md:px-20 lg:px-32 xl:px-40 2xl:px-48'>
-            <section className="mx-auto mt-6 w-full max-w-7x rounded-xl border border-slate-200 bg-white p-4 shadow-sm ">
+            <section ref={invoiceRef} className="mx-auto mt-6 w-full max-w-7x rounded-xl border border-slate-200 bg-white p-4 shadow-sm ">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4  ">
                     <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Invoice Generator</h1>
                     <button
                         type="button"
-                        onClick={() => window.print()}
+                        onClick={handlePrintInvoice}
                         className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                     >
                         Print Invoice
