@@ -1,16 +1,18 @@
 import React from 'react'
 import Navbar from '../../landingPage/Navbar'
+import InvoiceGenerator from './InvoiceGenerator'
 
 const CreateInVoice = () => {
     return (
-        <div>
+        <div className="min-h-screen bg-slate-50">
             <section>
                 <Navbar></Navbar>
             </section>
-            
-            CreateInVoice
-            
-            </div>
+
+            <section>
+                <InvoiceGenerator />
+            </section>
+        </div>
     )
 }
 
