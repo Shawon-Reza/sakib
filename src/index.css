@@ -8,7 +8,15 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'primaryFont';
+  src: url('./assets/fonts/Delius-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
+/* ============================= Set custom font for body ========================== */
 body {
-  font-family: 'customFont', sans-serif;
+  font-family: 'primaryFont', sans-serif;
 }
