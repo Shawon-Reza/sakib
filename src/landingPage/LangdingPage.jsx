@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
+import Footer from './Footer'
 
 const LangdingPage = () => {
     return (
@@ -8,7 +9,14 @@ const LangdingPage = () => {
                 <Navbar />
             </section>
 
-            <h1 className="text-2xl font-semibold text-slate-900">Invoice Dashboard</h1>
+            <h1 className="text-2xl font-semibold text-slate-900">Invoice Dashboard</h1>\
+
+
+
+
+            <section>
+                <Footer />
+            </section>
         </div>
     )
 }

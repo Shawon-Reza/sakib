@@ -35,7 +35,7 @@ function Navbar() {
     return (
         <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
             
-            <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main Navigation">
+            <nav className="mx-auto flex h-16 items-center justify-between px-4 sm:px-8 lg:px-16" aria-label="Main Navigation">
                 <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white text-sm font-semibold text-slate-800">
                         IP
